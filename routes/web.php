@@ -18,18 +18,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => ['auth', 'verified']], function ()
+Route::group(['prefix' => 'admin','middleware' => ['auth', 'verified']], function () {
+    Route::get('list', [\App\Http\Controllers\adminController::class,'index'])->name('admin.list');
+});
+
+
+Route::group(['middleware' => ['auth','isAdmin']], function ()
 {
-    //Route::get('/todolist', [\App\Http\Controllers\taskController::class, 'index']);
-    Route::get('/dashboard', [\App\Http\Controllers\taskController::class, 'index'])->name('dashboard');
+
+    Route::get('/todolist', [\App\Http\Controllers\taskController::class, 'index'])->name('dashboard');
     Route::get('/todolist/taskUpdate', [\App\Http\Controllers\taskController::class,'taskUpdate']);
     Route::get('/todolist/delete/{id}', [\App\Http\Controllers\taskController::class,'destroy']);
-    Route::get('/todolist/edit/{id}', [\App\Http\Controllers\taskController::class,'edit']);
+    Route::get('/todolist/edit/{id}', [\App\Http\Controllers\taskController::class,'edit'])->name('edit');
     Route::get('/todolist/create', [\App\Http\Controllers\taskController::class,'create']);
 });
 
 
 
+//admin route
 
 
 

@@ -10,12 +10,17 @@
             <div class="card-header">
                 Task Update
             </div>
-
+            @foreach($taskk as $task)
+                @php
+                $id = $task->id;
+                @endphp
+            @endforeach
             <div class="card-body">
+
                 <form action="{{ url('/todolist/taskUpdate')  }}">
                     @csrf
                     <div class="input-group mt-3">
-                        <input type="hidden" name="id" value="{{$id}}">
+                        <input type="hidden" name="id" value="{{ $id }}">
                         <input id="txtTaskName" name="content" type="text" class="form-control"  aria-describedby="btnAddNewTask">
                         <div class="input-group-append">
                             <button value="submit" class="btn btn-success" >Update

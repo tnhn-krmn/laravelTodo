@@ -10813,6 +10813,8 @@ select {
     padding-bottom: 1rem;
   }.sm\:text-left{
     text-align: left;
+  }.sm\:text-center{
+    text-align: center;
   }.sm\:text-right{
     text-align: right;
   }

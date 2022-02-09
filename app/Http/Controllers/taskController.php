@@ -15,11 +15,18 @@ class taskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $id = Auth::id();
         $task = Task::where('user_id',$id)->paginate(10);
         return view('dashboard',compact('task'));
+    }
+
+    public function list()
+    {
+
+        return view('dashboard');
     }
 
     /**
@@ -54,9 +61,9 @@ class taskController extends Controller
     public function edit($id)
     {
 
-        $id = Auth::id();
+
         $taskk = Task::where('user_id',$id)->get();
-        return view('tasks.todoUpdate',compact('id','taskk'));
+        return view('tasks.todoUpdate',compact('taskk'));
     }
 
     /**
@@ -68,12 +75,15 @@ class taskController extends Controller
      */
     public function taskUpdate(Request $request)
     {
-        if ($request['content'] != "")
+        //dd($request->all());
+        if ($request->id != "")
         {
-            $task = Task::find($request->id);
 
-            $task->content = $request['content'];
+            $content = $request['content'];
+            $task = Task::find($request->id);
+            $task->content =  $content;
             $task->update();
+
             return redirect()->back()->with('message','Güncelleme İşlemi Başarılı');
         }
         else
@@ -90,7 +100,6 @@ class taskController extends Controller
      */
     public function destroy($id)
     {
-
         $task = Task::find($id);
         $task->delete();
         return redirect()->back();
